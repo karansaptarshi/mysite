@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Problems Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .random-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .random-btn:hover {
+            background: #45a049;
+        }
+        
+        .random-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .category {
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .category h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+        
+        .problem {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .problem:hover {
+            background: #f9f9f9;
+        }
+        
+        .problem.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+        
+        .problem.highlighted {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+        }
+        
+        .problem input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .problem a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+        
+        .problem a:hover {
+            text-decoration: underline;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 8px;
+            color: white;
+        }
+        
+        .difficulty.easy {
+            background-color: #00b04f;
+        }
+        
+        .difficulty.medium {
+            background-color: #ffa116;
+        }
+        
+        .difficulty.hard {
+            background-color: #ff375f;
+        }
+        
+        .stats {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Coding Problems Tracker</h1>
+    </div>
+    
+    <div class="stats">
+        <span id="completed-count">0</span> / <span id="total-count">0</span> completed
+    </div>
+    
+    <div class="controls">
+        <button class="random-btn" id="random-btn">Pick Random Problem</button>
+    </div>
+    
+    <div id="problems-container">
+        <div class="category">
+            <h3>Arrays & Hashing</h3>
+            <div class="problem">
+                <input type="checkbox" id="p1" data-problem="Contains Duplicate">
+                <label for="p1">1. <a href="https://leetcode.com/problems/contains-duplicate/" target="_blank">Contains Duplicate</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p2" data-problem="Valid Anagram">
+                <label for="p2">2. <a href="https://leetcode.com/problems/valid-anagram/" target="_blank">Valid Anagram</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p3" data-problem="Two Sum">
+                <label for="p3">3. <a href="https://leetcode.com/problems/two-sum/" target="_blank">Two Sum</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p4" data-problem="Group Anagrams">
+                <label for="p4">4. <a href="https://leetcode.com/problems/group-anagrams/" target="_blank">Group Anagrams</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p5" data-problem="Top K Frequent Elements">
+                <label for="p5">5. <a href="https://leetcode.com/problems/top-k-frequent-elements/" target="_blank">Top K Frequent Elements</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p6" data-problem="Product of Array Except Self">
+                <label for="p6">6. <a href="https://leetcode.com/problems/product-of-array-except-self/" target="_blank">Product of Array Except Self</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p7" data-problem="Longest Consecutive Sequence">
+                <label for="p7">7. <a href="https://leetcode.com/problems/longest-consecutive-sequence/" target="_blank">Longest Consecutive Sequence</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h3>Two Pointers</h3>
+            <div class="problem">
+                <input type="checkbox" id="p8" data-problem="Valid Palindrome">
+                <label for="p8">8. <a href="https://leetcode.com/problems/valid-palindrome/" target="_blank">Valid Palindrome</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p9" data-problem="Two Sum II Input Array Is Sorted">
+                <label for="p9">9. <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/" target="_blank">Two Sum II Input Array Is Sorted</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p10" data-problem="3Sum">
+                <label for="p10">10. <a href="https://leetcode.com/problems/3sum/" target="_blank">3Sum</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p11" data-problem="Container With Most Water">
+                <label for="p11">11. <a href="https://leetcode.com/problems/container-with-most-water/" target="_blank">Container With Most Water</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h3>Sliding Window</h3>
+            <div class="problem">
+                <input type="checkbox" id="p12" data-problem="Best Time to Buy And Sell Stock">
+                <label for="p12">12. <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" target="_blank">Best Time to Buy And Sell Stock</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p13" data-problem="Longest Substring Without Repeating Characters">
+                <label for="p13">13. <a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank">Longest Substring Without Repeating Characters</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p14" data-problem="Longest Repeating Character Replacement">
+                <label for="p14">14. <a href="https://leetcode.com/problems/longest-repeating-character-replacement/" target="_blank">Longest Repeating Character Replacement</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h3>Stack</h3>
+            <div class="problem">
+                <input type="checkbox" id="p15" data-problem="Valid Parentheses">
+                <label for="p15">15. <a href="https://leetcode.com/problems/valid-parentheses/" target="_blank">Valid Parentheses</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p16" data-problem="Min Stack">
+                <label for="p16">16. <a href="https://leetcode.com/problems/min-stack/" target="_blank">Min Stack</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p17" data-problem="Daily Temperatures">
+                <label for="p17">17. <a href="https://leetcode.com/problems/daily-temperatures/" target="_blank">Daily Temperatures</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h3>Binary Search</h3>
+            <div class="problem">
+                <input type="checkbox" id="p18" data-problem="Binary Search">
+                <label for="p18">18. <a href="https://leetcode.com/problems/binary-search/" target="_blank">Binary Search</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p19" data-problem="Find Minimum In Rotated Sorted Array">
+                <label for="p19">19. <a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/" target="_blank">Find Minimum In Rotated Sorted Array</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p20" data-problem="Search In Rotated Sorted Array">
+                <label for="p20">20. <a href="https://leetcode.com/problems/search-in-rotated-sorted-array/" target="_blank">Search In Rotated Sorted Array</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h3>Linked List</h3>
+            <div class="problem">
+                <input type="checkbox" id="p21" data-problem="Reverse Linked List">
+                <label for="p21">21. <a href="https://leetcode.com/problems/reverse-linked-list/" target="_blank">Reverse Linked List</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p22" data-problem="Merge Two Sorted Lists">
+                <label for="p22">22. <a href="https://leetcode.com/problems/merge-two-sorted-lists/" target="_blank">Merge Two Sorted Lists</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p23" data-problem="Reorder List">
+                <label for="p23">23. <a href="https://leetcode.com/problems/reorder-list/" target="_blank">Reorder List</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p24" data-problem="Remove Nth Node From End of List">
+                <label for="p24">24. <a href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/" target="_blank">Remove Nth Node From End of List</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p25" data-problem="Linked List Cycle">
+                <label for="p25">25. <a href="https://leetcode.com/problems/linked-list-cycle/" target="_blank">Linked List Cycle</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p26" data-problem="LRU Cache">
+                <label for="p26">26. <a href="https://leetcode.com/problems/lru-cache/" target="_blank">LRU Cache</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h3>Trees</h3>
+            <div class="problem">
+                <input type="checkbox" id="p27" data-problem="Invert Binary Tree">
+                <label for="p27">27. <a href="https://leetcode.com/problems/invert-binary-tree/" target="_blank">Invert Binary Tree</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p28" data-problem="Maximum Depth of Binary Tree">
+                <label for="p28">28. <a href="https://leetcode.com/problems/maximum-depth-of-binary-tree/" target="_blank">Maximum Depth of Binary Tree</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p29" data-problem="Diameter of Binary Tree">
+                <label for="p29">29. <a href="https://leetcode.com/problems/diameter-of-binary-tree/" target="_blank">Diameter of Binary Tree</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p30" data-problem="Balanced Binary Tree">
+                <label for="p30">30. <a href="https://leetcode.com/problems/balanced-binary-tree/" target="_blank">Balanced Binary Tree</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p31" data-problem="Same Tree">
+                <label for="p31">31. <a href="https://leetcode.com/problems/same-tree/" target="_blank">Same Tree</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p32" data-problem="Subtree of Another Tree">
+                <label for="p32">32. <a href="https://leetcode.com/problems/subtree-of-another-tree/" target="_blank">Subtree of Another Tree</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p33" data-problem="Lowest Common Ancestor of a Binary Search Tree">
+                <label for="p33">33. <a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/" target="_blank">Lowest Common Ancestor of a Binary Search Tree</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p34" data-problem="Binary Tree Level Order Traversal">
+                <label for="p34">34. <a href="https://leetcode.com/problems/binary-tree-level-order-traversal/" target="_blank">Binary Tree Level Order Traversal</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p35" data-problem="Binary Tree Right Side View">
+                <label for="p35">35. <a href="https://leetcode.com/problems/binary-tree-right-side-view/" target="_blank">Binary Tree Right Side View</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p36" data-problem="Count Good Nodes In Binary Tree">
+                <label for="p36">36. <a href="https://leetcode.com/problems/count-good-nodes-in-binary-tree/" target="_blank">Count Good Nodes In Binary Tree</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p37" data-problem="Validate Binary Search Tree">
+                <label for="p37">37. <a href="https://leetcode.com/problems/validate-binary-search-tree/" target="_blank">Validate Binary Search Tree</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p38" data-problem="Kth Smallest Element In a BST">
+                <label for="p38">38. <a href="https://leetcode.com/problems/kth-smallest-element-in-a-bst/" target="_blank">Kth Smallest Element In a BST</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h3>Heap / Priority Queue</h3>
+            <div class="problem">
+                <input type="checkbox" id="p39" data-problem="Kth Largest Element In a Stream">
+                <label for="p39">39. <a href="https://leetcode.com/problems/kth-largest-element-in-a-stream/" target="_blank">Kth Largest Element In a Stream</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p40" data-problem="Last Stone Weight">
+                <label for="p40">40. <a href="https://leetcode.com/problems/last-stone-weight/" target="_blank">Last Stone Weight</a> <span class="difficulty easy">Easy</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p41" data-problem="Kth Largest Element In An Array">
+                <label for="p41">41. <a href="https://leetcode.com/problems/kth-largest-element-in-an-array/" target="_blank">Kth Largest Element In An Array</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h3>Graphs</h3>
+            <div class="problem">
+                <input type="checkbox" id="p42" data-problem="Number of Islands">
+                <label for="p42">42. <a href="https://leetcode.com/problems/number-of-islands/" target="_blank">Number of Islands</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p43" data-problem="Max Area of Island">
+                <label for="p43">43. <a href="https://leetcode.com/problems/max-area-of-island/" target="_blank">Max Area of Island</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p44" data-problem="Clone Graph">
+                <label for="p44">44. <a href="https://leetcode.com/problems/clone-graph/" target="_blank">Clone Graph</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p45" data-problem="Pacific Atlantic Water Flow">
+                <label for="p45">45. <a href="https://leetcode.com/problems/pacific-atlantic-water-flow/" target="_blank">Pacific Atlantic Water Flow</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p46" data-problem="Surrounded Regions">
+                <label for="p46">46. <a href="https://leetcode.com/problems/surrounded-regions/" target="_blank">Surrounded Regions</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p47" data-problem="Course Schedule">
+                <label for="p47">47. <a href="https://leetcode.com/problems/course-schedule/" target="_blank">Course Schedule</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+            <div class="problem">
+                <input type="checkbox" id="p48" data-problem="Course Schedule II">
+                <label for="p48">48. <a href="https://leetcode.com/problems/course-schedule-ii/" target="_blank">Course Schedule II</a> <span class="difficulty medium">Medium</span></label>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class ProblemTracker {
+            constructor() {
+                this.completedProblems = new Set();
+                this.loadState();
+                this.initializeEventListeners();
+                this.updateStats();
+                this.updateRandomButton();
+            }
+            
+            loadState() {
+                const saved = localStorage.getItem('codingProblems');
+                if (saved) {
+                    this.completedProblems = new Set(JSON.parse(saved));
+                    this.completedProblems.forEach(problemId => {
+                        const checkbox = document.getElementById(problemId);
+                        if (checkbox) {
+                            checkbox.checked = true;
+                            checkbox.closest('.problem').classList.add('completed');
+                        }
+                    });
+                }
+            }
+            
+            saveState() {
+                localStorage.setItem('codingProblems', JSON.stringify([...this.completedProblems]));
+            }
+            
+            initializeEventListeners() {
+                document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.addEventListener('change', (e) => {
+                        const problemId = e.target.id;
+                        const problemDiv = e.target.closest('.problem');
+                        
+                        if (e.target.checked) {
+                            this.completedProblems.add(problemId);
+                            problemDiv.classList.add('completed');
+                        } else {
+                            this.completedProblems.delete(problemId);
+                            problemDiv.classList.remove('completed');
+                        }
+                        
+                        this.saveState();
+                        this.updateStats();
+                        this.updateRandomButton();
+                        this.clearHighlight();
+                    });
+                });
+                
+                document.getElementById('random-btn').addEventListener('click', () => {
+                    this.pickRandomProblem();
+                });
+            }
+            
+            updateStats() {
+                const totalCount = document.querySelectorAll('input[type="checkbox"]').length;
+                const completedCount = this.completedProblems.size;
+                
+                document.getElementById('total-count').textContent = totalCount;
+                document.getElementById('completed-count').textContent = completedCount;
+            }
+            
+            updateRandomButton() {
+                const button = document.getElementById('random-btn');
+                const uncompletedProblems = this.getUncompletedProblems();
+                
+                if (uncompletedProblems.length === 0) {
+                    button.disabled = true;
+                    button.textContent = 'All Problems Completed!';
+                } else {
+                    button.disabled = false;
+                    button.textContent = 'Pick Random Problem';
+                }
+            }
+            
+            getUncompletedProblems() {
+                const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+                return Array.from(allCheckboxes).filter(checkbox => !this.completedProblems.has(checkbox.id));
+            }
+            
+            pickRandomProblem() {
+                this.clearHighlight();
+                
+                const uncompletedProblems = this.getUncompletedProblems();
+                if (uncompletedProblems.length === 0) return;
+                
+                const randomIndex = Math.floor(Math.random() * uncompletedProblems.length);
+                const selectedProblem = uncompletedProblems[randomIndex];
+                const problemDiv = selectedProblem.closest('.problem');
+                
+                problemDiv.classList.add('highlighted');
+                problemDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            
+            clearHighlight() {
+                document.querySelectorAll('.problem.highlighted').forEach(problem => {
+                    problem.classList.remove('highlighted');
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProblemTracker();
+        });
+    </script>
+</body>
+</html>
